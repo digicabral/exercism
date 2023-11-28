@@ -22,7 +22,19 @@ export class Matrix {
     return convertedRow;
   }
 
-  get columns(): unknown {
-    throw new Error("Remove this statement and implement this function");
+  get columns(): number[][] {
+    let outerColumn: number[][] = [];
+    const rows = this.rows;
+    rows.forEach(() => {
+      outerColumn.push([]);
+    });
+
+    for (const row of rows) {
+      row.forEach((value, index) => {
+        outerColumn[index].push(value);
+      });
+    }
+
+    return outerColumn;
   }
 }
