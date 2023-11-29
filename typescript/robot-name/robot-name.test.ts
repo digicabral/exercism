@@ -59,7 +59,7 @@ describe("Robot", () => {
   });
 
   it("should set a unique name after reset", () => {
-    const NUMBER_OF_ROBOTS = 1000;
+    const NUMBER_OF_ROBOTS = 10000;
     const usedNames = new Set();
 
     usedNames.add(robot.name);

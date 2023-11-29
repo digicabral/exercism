@@ -1,5 +1,3 @@
-import Randexp from "randexp";
-
 export class Robot {
   public name: string;
   private static namesDB: Set<string> = new Set<string>();
@@ -10,22 +8,31 @@ export class Robot {
 
   private generateName(): string {
     const name = this.newName();
-    const initialSetSize = Robot.namesDB.size;
-    let increseadSetSize = Robot.namesDB.size;
 
-    while (initialSetSize <= increseadSetSize) {
-      if (!Robot.namesDB.has(name)) {
-        Robot.namesDB.add(name);
-        increseadSetSize++;
-        return name;
-      }
+    if (!Robot.namesDB.has(name)) {
+      Robot.namesDB.add(name);
+      return name;
     }
-    return "";
+    return this.generateName();
+  }
+
+  private makeid(characters: string, length: number): string {
+    let result = "";
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+      counter += 1;
+    }
+    return result;
   }
 
   private newName(): string {
-    const regex = new Randexp(/^[A-Z]{2}\d{3}$/);
-    return regex.gen();
+    return (
+      this.makeid("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 2) +
+      this.makeid("0123456789", 3)
+    );
   }
 
   public resetName(): void {
@@ -33,7 +40,6 @@ export class Robot {
   }
 
   public static releaseNames(): void {
-    console.log(this.namesDB);
     this.namesDB.clear();
   }
 }
